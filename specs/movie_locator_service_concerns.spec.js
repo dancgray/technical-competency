@@ -1,16 +1,16 @@
-describe('Given I have a Movie Locator Service and its been initialised with a list of movies', function () {
+describe('As a Movie Reviewer I want to be able to find movies by release date, director or possibly all available movies. Given I have a Movie Locator Service and its been initialised with a list of movies', function () {
   describe('when getting all movies', function () {
     it('should provide the list of movies it was initialised with.', function (){
       var locatorService = new MovieReview.MovieLocatorService(movie_test_data);
-      expect(locatorService.get()).to.be(movie_test_data);
+      expect(locatorService.get()).to.eql(movie_test_data);
     });
   });
 
   describe('when getting all movies by release date', function () {
     it('should provide the list of movies it was initialised with in release date ascending order.', function() {
       var locatorService = new MovieReview.MovieLocatorService(movie_test_data);
-      var expectedResult = [movie_test_data[0], movie_test_data[4], movie_test_data[2], movie_test_data[3]];
-      expect(locatorService.get({ orderBy: 'releaseDate' })).to.be(expectedResult);
+      var expectedResult = [movie_test_data[0], movie_test_data[3], movie_test_data[1], movie_test_data[2]];
+      expect(locatorService.get({ orderBy: 'releaseDate' })).to.eql(expectedResult);
     });
   });
 
@@ -18,81 +18,52 @@ describe('Given I have a Movie Locator Service and its been initialised with a l
     it('should provide a list of movies for that director.', function() {
       var locatorService = new MovieReview.MovieLocatorService(movie_test_data);
       var expectedResult = [movie_test_data[0], movie_test_data[2]];
-      expect(locatorService.getByDirector('Michelle S. Smith')).to.be(expectedResult);
+      expect(locatorService.findByDirector('Michelle S. Smith')).to.eql(expectedResult);
     });
   });
+
+
+
+  var movie_test_data = [
+    {
+      title: 'Movie A',
+      releaseDate: new Date('2013-01-01'),
+      cast: [],
+      crew: [
+        { credit: 'Director', name: 'Michelle S. Smith' },
+        { credit: 'Producer', name: 'Kate Hensley' }
+      ]
+    },
+    {
+      title: 'Movie B',
+      releaseDate: new Date('2013-02-01'),
+      cast: [],
+      crew: [
+        { credit: 'Director', name: 'Ian C. Sandstrom' },
+        { credit: 'Producer', name: 'Doug Foster' }
+      ]
+    },
+    {
+      title: 'Movie C',
+      releaseDate: new Date('2013-03-01'),
+      cast: [],
+      crew: [
+        { credit: 'Director', name: 'Michelle S. Smith' },
+        { credit: 'Producer', name: 'Lewis M. Moore' }
+      ]
+    },
+    {
+      title: 'Movie D',
+      releaseDate: new Date('2013-01-01'),
+      cast: [],
+      crew: [
+        { credit: 'Director', name: 'John K. Quirk' },
+        { credit: 'Producer', name: 'Ryan Elliot' }
+      ]
+    },
+  ];
+
 });
 
 
-var movie_test_data = [
-  {
-    title: 'Movie A',
-    releaseDate: new Date('2013-01-01'),
-    cast: [],
-    crew: [
-      { credit: 'Director', name: 'Michelle S. Smith' }
-    ]
-  },
-  {
-    title: 'Movie B',
-    releaseDate: new Date('2013-02-01'),
-    cast: [],
-    crew: [
-      { credit: 'Director', name: 'Ian C. Sandstrom' }
-    ]
-  },
-  {
-    title: 'Movie C',
-    releaseDate: new Date('2013-03-01'),
-    cast: [],
-    crew: [
-      { credit: 'Director', name: 'Michelle S. Smith' }
-    ]
-  },
-  {
-    title: 'Movie D',
-    releaseDate: new Date('2013-01-01'),
-    cast: [],
-    crew: [
-      { credit: 'Director', name: 'John K. Quirk' }
-    ]
-  },
-];
 
-var reviews_test_data = [
-  {
-    name: "A Reviewer",
-    comment: "I like this movie.",
-    email: "a@example.com",
-    score: 0.6,
-    movie: movie_test_data[0]
-  },
-  {
-    name: "A Reviewer 2",
-    comment: "I dislike this movie.",
-    email: "a2@example.com",
-    score: 0.3,
-    movie: movie_test_data[0]
-  },
-  {
-    name: "B Reviewer",
-    comment: "I like this movie.",
-    email: "b@example.com",
-    score: 0.8,
-    movie: movie_test_data[1]
-  },
-  {
-    name: "C Reviewer",
-    comment: "I like this movie.",
-    email: "c@example.com",
-    score: 0.5,
-    movie: movie_test_data[2]
-  },
-  {
-    name: "D Reviewer",
-    comment: "I dislike this movie.",
-    email: "d@example.com",
-    score: 0.1,
-    movie: movie_test_data[3]
-  }
-];
